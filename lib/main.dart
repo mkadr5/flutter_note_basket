@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_note_basket/category_operations.dart';
 import 'package:flutter_note_basket/models/category.dart';
 import 'package:flutter_note_basket/models/notes.dart';
 import 'package:flutter_note_basket/note_detail.dart';
@@ -33,7 +34,25 @@ class NoteList extends StatelessWidget {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        title: Center(child: Text("Note Basket")),
+        title: Center(
+          child: Text("Note Basket"),
+        ),
+        actions: [
+          PopupMenuButton(itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                child: ListTile(
+                  leading: Icon(Icons.category),
+                  title: Text("Categorys"),
+                  onTap: () {
+                    Navigator.pop(context);
+                    _runCategorysPage(context);
+                  },
+                ),
+              )
+            ];
+          }),
+        ],
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -144,6 +163,11 @@ class NoteList extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _runCategorysPage(BuildContext context) {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => CategoryPage()));
   }
 }
 
